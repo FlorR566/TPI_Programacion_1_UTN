@@ -9,5 +9,6 @@
 
 ### ✨ Estudiantes
 
-- **Nombre:** Franco, Analía / Rodriguez, Florencia
+- **Nombre:** Franco, Analía
+- **Nombre:** Rodriguez, Florencia
 
