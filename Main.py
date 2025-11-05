@@ -42,7 +42,7 @@ def agregarPais_csv(pais):
     Agrega un nuevo pais al archivo CSV.
 
     Args:
-    pais (dict): diccionario con claves 'NOMBRE', 'POBLACION', 'SUPERFICIE', 'CONTINENTE'.
+        pais (dict): diccionario con claves 'NOMBRE', 'POBLACION', 'SUPERFICIE', 'CONTINENTE'.
     '''
     # Modo append ("a") -> agrega sin borrar los datos existentes:
     with open(NOMBRE_ARCHIVO, "a", newline="", encoding="utf-8") as archivo: 
@@ -53,18 +53,17 @@ def agregarPais_csv(pais):
 
 
 def guardarTodosPaises_csv(paises):
-  """
-  Guarda una lista completa de los paises en el archivo CSV,
-  sobreescribiendo su contenido actual.
+    '''
+    Guarda una lista completa de los paises en el archivo CSV, sobreescribiendo su contenido actual.
     
-  Args: 
-      paises (list[dict]): lista de paises con claves "NOMBRE", "POBLACION", "SUPERFICIE", "CONTINENTE".
-  """
-  # Modo ("w") -> sobreescribe todo el archivo:
-  with open(NOMBRE_ARCHIVO, "w", newline="", encoding="utf-8") as archivo: 
-    escritor = csv.DictWriter(archivo, fieldnames=["NOMBRE", "POBLACION", "SUPERFICIE", "CONTINENTE"])
-    escritor.writeheader()          # escribe el título 
-    escritor.writerows(paises)  
+    Args:
+        paises (list[dict]): lista de paises con claves "NOMBRE", "POBLACION", "SUPERFICIE", "CONTINENTE".
+    '''
+    # Modo ("w") -> sobreescribe todo el archivo:
+    with open(NOMBRE_ARCHIVO, "w", newline="", encoding="utf-8") as archivo: 
+        escritor = csv.DictWriter(archivo, fieldnames=["NOMBRE", "POBLACION", "SUPERFICIE", "CONTINENTE"])
+        escritor.writeheader()          # escribe el título 
+        escritor.writerows(paises)  
 
 
 
@@ -106,30 +105,25 @@ def validar_continente():
 
 
 
-def validar_cantidad(categoria, valor):
+def validar_cantidad(categoria, entrada):
     '''
-    Valida que el valor ingresado por el usuario sea un número entero positivo (<0).
+    Valida que la entrada ingresada por el usuario sea un número entero positivo (<0).
 
     Args: 
         categoria (str): nombre del parámetro que se evalúa (por ejemplo: "poblacion" o "superficie en km²").
-        valor (str): cantidad ingresada por el usuario.
+        entrada (str): cantidad ingresada por el usuario.
 
     Returns:
-        valor (int): la cantidad validada y convertida a entero.
+        entrada (int): la cantidad validada y convertida a entero.
 
     '''
     while True:
-        try:
-            valor = int(valor)
-            if valor > 0:
-                return valor
-            
-            print("⚠️ [ERROR]: debe ser un número mayor que 0.\n")
-
-        except ValueError:
-            print("⚠️ [ERROR]: ingrese solo números enteros.\n")
+        if entrada.isdigit() and int(entrada) > 0:
+            return int(entrada)
         
-        valor = input(f"Ingrese la {categoria} sin puntos: ").strip()
+        entrada = input(f"\n ⚠️ [ERROR]: ingrese solo números enteros para la {categoria}: ").strip()
+
+
 
 
 
@@ -166,9 +160,11 @@ def agregar_pais():
 
     nombre = validar_pais()
 
-    poblacion = validar_cantidad("poblacion", input("Ingrese la poblacion: ").strip())
+    entrada_poblacion = input("Ingrese la poblacion: ").strip()
+    poblacion = validar_cantidad("poblacion", entrada_poblacion )
 
-    superficie = validar_cantidad("superficie", input("Ingrese la superficie: ").strip())
+    entrada_superficie = input("Ingrese la superficie: ").strip()
+    superficie = validar_cantidad("superficie", entrada_superficie )
     
     continente = validar_continente()
     
@@ -200,12 +196,14 @@ def actualizar_pais():
     for pais in paises: 
         if pais["NOMBRE"].lower() == buscar_nombre.lower():
             # Actualiza población:
-            nueva_poblacion = validar_cantidad("población", input("Ingrese la cantidad de población a actualizar: ").strip())
+            entrada_poblacion = input("Ingrese la cantidad de población a actualizar: ").strip()
+            nueva_poblacion = validar_cantidad("población", entrada_poblacion)
             pais["POBLACION"] = nueva_poblacion
             print("✅ [OK] Población actualizada")
             
             # Actualiza la superficie: 
-            nueva_superficie = validar_cantidad("superficie en km²", input("Ingrese la superficie en km² a actualizar: ").strip())
+            entrada_superficie = input("Ingrese la superficie en km² a actualizar: ").strip()
+            nueva_superficie = validar_cantidad("superficie en km²", entrada_superficie)
             pais["SUPERFICIE"] = nueva_superficie
             print("✅ [OK] Superficie actualizada")
     
@@ -215,6 +213,25 @@ def actualizar_pais():
 
 
             
+
+def buscar_pais():
+    '''
+    Busca un país por nombre, usando coincidencia parcial o exacta
+    '''
+    print("\n--- BUSCAR PAÍS ---")
+
+    buscar_nombre = input("Ingrese el nombre del país a buscar: ").strip()
+
+    while True:
+        if not existe_pais(buscar_nombre):
+            buscar_nombre = input("⚠️ [ADVERTENCIA] No se encuentra el país, ingrese otro: ")
+        else: 
+            paises = obtenerPaises_csv()
+            for pais in paises:
+                if buscar_nombre.lower() == pais["NOMBRE"].lower():
+                    print(f"\n País: {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | Superficie: {pais['SUPERFICIE']} km² | Continente: {pais['CONTINENTE'].title()}")
+            break
+
 
 
 
@@ -260,10 +277,9 @@ def main():
             case '2':
                 actualizar_pais()
         
+            case '3':
+                buscar_pais()
             
-            # case '3':
-            #     buscar_pais(paises)
-            #     pass
             
             # case '4':
             #     filtrar_por_continente(paises)
