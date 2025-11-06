@@ -93,7 +93,7 @@ def validar_continente():
     Solicita un continente al usuario y valida que el texto 
     ingresado sea un continente válido dentro del array continentes.
     '''
-    continentes = ["america", "europa", "asia", "africa", "oceania", "antartida"]
+    continentes = ["america", "europa", "asia", "africa", "oceania"]
     entrada = input(f"Ingrese el continente: ").strip().lower()
     while True:
         if not entrada in continentes:
@@ -129,8 +129,8 @@ def validar_cantidad(categoria, entrada):
 
 def validar_pais():
     '''
-    Solicita un continente al usuario y valida que el texto 
-    ingresado sea un continente válido dentro del array continentes.
+    Solicita un nombre al usuario y valida que el texto 
+    ingresado sea un pais válido dentro del array continentes.
     '''
     while True: 
         nombre = input("Ingrese nombre del país: ")
@@ -160,10 +160,10 @@ def agregar_pais():
 
     nombre = validar_pais()
 
-    entrada_poblacion = input("Ingrese la poblacion: ").strip()
+    entrada_poblacion = input("Ingrese la cantidad poblacion: ").strip()
     poblacion = validar_cantidad("poblacion", entrada_poblacion )
 
-    entrada_superficie = input("Ingrese la superficie: ").strip()
+    entrada_superficie = input("Ingrese la cantidad superficie: ").strip()
     superficie = validar_cantidad("superficie", entrada_superficie )
     
     continente = validar_continente()
@@ -212,6 +212,59 @@ def actualizar_pais():
     guardarTodosPaises_csv(paises)
 
 
+
+
+
+def coincidencia_parcial(paises):
+    '''
+    Busca países que coincidan con las primeras tres letras del texto ingresado por el usuasio.
+    Muestra los resultados y permite seleccionar uno para ver sus datos completos.
+
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+
+    Returns:
+        None (Muestra la información por consola).
+    '''
+    print("\n_____Coincidencia Parcial____")
+
+    if len(paises) == 0:
+        print("\n ⚠️ [ADVERTENCIA] No hay países cargados.\n Puede ingresarlos en la opción 1 del menú general.")
+        return
+
+    buscar_nombre = input("\nIngrese el nombre del país a buscar: ").strip() 
+    
+    filtrar_paises = []
+
+    # Busca coincidencias con la primera, segunda y tercer letra del pais
+    for pais in paises:
+        if pais["NOMBRE"][:3] == buscar_nombre[:3]:
+            if pais not in filtrar_paises:
+                filtrar_paises.append(pais)
+  
+    if not filtrar_paises:
+        print("⚠️ No se encontraron países con esas letras.")
+        return
+
+    print("\nCoincidencias encontradas:")
+    # Muestra las coincidencias encontradas
+    for pais_encontrado in filtrar_paises:
+        print(f"\n [{filtrar_paises.index(pais_encontrado) +1}]: {pais_encontrado["NOMBRE"]}")
+      
+    # Solicita al usuario una opción para avanzar
+    while True: 
+        index = input("\n 👉 Elegir una opción: ").strip()
+
+        if index.isdigit() and 1 <= int(index) <= len(filtrar_paises):
+            index = int(index) -1
+            # Muestra la opción elegida
+            print(f"\nSeleccionaste: 🌎 País: {filtrar_paises[index]['NOMBRE'].title()} | Población: {filtrar_paises[index]["POBLACION"]} | Superficie: {filtrar_paises[index]["SUPERFICIE"]} | Continente: {filtrar_paises[index]["CONTINENTE"]}\n")
+            break
+
+        else:
+            print("⚠️ Opción inválida.")
+            continue
+
             
 
 def buscar_pais():
@@ -219,27 +272,181 @@ def buscar_pais():
     Busca un país por nombre, usando coincidencia parcial o exacta
     '''
     print("\n--- BUSCAR PAÍS ---")
+    # Guarda el array de países
+    paises = obtenerPaises_csv()
 
-    buscar_nombre = input("Ingrese el nombre del país a buscar: ").strip()
+    entrada = input(
+    "\nSeleccione el tipo de búsqueda:\n"
+    "  [1] Parcial - busca coincidencias parciales\n"
+    "  [2] Exacta  - busca coincidencia completa\n"
+    "Opción: ")
 
     while True:
-        if not existe_pais(buscar_nombre):
-            buscar_nombre = input("⚠️ [ADVERTENCIA] No se encuentra el país, ingrese otro: ")
-        else: 
-            paises = obtenerPaises_csv()
-            for pais in paises:
-                if buscar_nombre.lower() == pais["NOMBRE"].lower():
-                    print(f"\n País: {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | Superficie: {pais['SUPERFICIE']} km² | Continente: {pais['CONTINENTE'].title()}")
-            break
+        match entrada:
+            case '1':
+                # Búqueda con coincidencia parcial:
+                coincidencia_parcial(paises)
+                break
+
+            case '2':
+                # Búqueda con coincidencia exacta:
+                print("\n_____Coincidencia Exacta_____")
+
+                if len(paises) == 0:
+                    print("\n ⚠️ [ADVERTENCIA] No hay países cargados.\n Puede ingresarlos en la opción 1 del menú general.")
+                    return
+                
+                buscar_nombre = input("Ingrese el nombre del país a buscar: ").strip()
+
+                while True:
+                    if not buscar_nombre: 
+                        buscar_nombre =  input("❌ [Error] Se agregó un espacio vacío, ingrese nuevamente el nombre: ").strip()
+                        continue
+                    if not existe_pais(buscar_nombre):
+                        buscar_nombre = input("❌ [Error] No se encuentra el país, ingrese otro: ").strip()
+                    else: 
+                        for pais in paises:
+                            if buscar_nombre.lower() == pais["NOMBRE"].lower():
+                                print(f"\n 🌎 País: {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | Superficie: {pais['SUPERFICIE']} km² | Continente: {pais['CONTINENTE'].title()}")
+                        break
+                break
+
+            case _:
+                entrada = input("❌ [Error] Ingrese [1] Búsqueda Parcial o [2] Exacta: ")
+                continue
 
 
 
 
 
-
+def filtrar_por_continente():
+    '''
+    Filtra países por continente
+    '''
+    print("\n--- FILTRAR POR CONTINENTE ---")
+    
+    paises = obtenerPaises_csv()
+    
+    #Validar que hay países cargados
+    if not paises:
+        print("⚠️ [ADVERTENCIA] No hay países cargados.")
+        return
+    
+    # Llama a la función validar_continente
+    continente = validar_continente()
+    
+    # Filtra los países
+    filtrar_paises = []
+    for pais in paises:
+        if pais["CONTINENTE"].lower() == continente.lower():
+            filtrar_paises.append(pais)
+    
+    # Muestra los resultados
+    if filtrar_paises:
+        print(f"\n Países del continente '{continente}': ")
+        for pais in filtrar_paises:
+            print(f"{pais["NOMBRE"]} - Población: {pais["POBLACION"]} - Superficie: {pais["SUPERFICIE"]} km²")
+    else:
+        print(f"⚠️ [ADVERTENCIA] No hay países del continente '{continente}'")
+        
     
    
+def filtrar_por_rango_poblacion():
+    '''
+    Filtra países por rango de población
+    '''
+    print("\n--- FILTRAR POR RANGO DE POBLACIÓN ---")
+    
+    paises = obtenerPaises_csv()
+    
+    # Validar que hay países cargados
+    if not paises:
+        print("⚠️ [ADVERTENCIA] No hay países cargados.")
+        return
+    
+    print("Ingrese el rango de la población: ")
+    
+    # Validar el rango de la población mínima
+    valor_min = input("Población mínima: ").strip()
+    min_poblacion = validar_cantidad("Población mínima", valor_min)
+    
+    # Validar el rango de la población máxima
+    valor_max = input("Población máxima: ").strip()
+    max_poblacion = validar_cantidad("Población máxima", valor_max)
+    
+    # Validamos que el rango mínimo no sea mayor que el rango máximo de la población
+    if min_poblacion > max_poblacion:
+        print("❌ [ERROR] La población mínima no puede ser mayor que la población máxima")
+        return
+    
+    #Filtrar los países
+    filtrar_paises = []
+    for pais in paises:
+        if min_poblacion <= pais["POBLACION"] <= max_poblacion:
+            filtrar_paises.append(pais)
+    
+    #Mostrar los resultados
+    if filtrar_paises:
+        print(f"\n✅ [OK] Países con población entre {min_poblacion} y {max_poblacion}: ")
+        print(f"Se encontraron {len(filtrar_paises)} país(es)")
+        for pais in filtrar_paises:
+            print(f"{pais['NOMBRE']} - Población: {pais['POBLACION']} - Superficie: {pais['SUPERFICIE']} km² - Continente: {pais['CONTINENTE']}")
+    else:
+        print(f"⚠️ [ADVERTENCIA] No se encontraron países con población entre {min_poblacion} y {max_poblacion}")
+
+
+
    
+def filtrar_por_rango_superficie():
+    '''
+    Filtra países por rango de superficie
+    '''
+    print("\n--- FILTRAR POR RANGO DE SUPERFICIE ---")
+    
+    paises = obtenerPaises_csv()
+    
+    # Valida que hay países cargados
+    if not paises:
+        print("⚠️ [ADVERTENCIA] No hay países cargados.")
+        return
+    
+    print("Ingrese el rango de la superficie (km²): ")
+    
+     # Valida el rango de la superficie mínima
+    valor_min = input("Superficie mínima: ").strip()
+    min_superficie = validar_cantidad(f"Superficie mínima {valor_min} km²")
+    
+    # Valida el rango de la superficie máxima
+    valor_max = input("Superficie máxima: ").strip()
+    max_superficie = validar_cantidad(f"Superficie máxima {valor_max} km²")
+    
+    # Valida que el rango mínimo no sea mayor que el rango máximo de la superficie
+    if min_superficie > max_superficie:
+        print("❌ [ERROR] La superficie mínima no puede ser mayor que la superficie máxima")
+        return
+    
+    # Filtr los países
+    filtrar_paises = []
+    for pais in paises:
+        if min_superficie <= pais["SUPERFICIE"] <= max_superficie:
+            filtrar_paises.append(pais)
+    
+    # Muestra los resultados
+    if filtrar_paises:
+        print(f"\n✅ [OK] Países con superficie entre {min_superficie} y {max_superficie}: ")
+        print(f"Se encontraron {len(filtrar_paises)} país(es)")
+        for pais in filtrar_paises:
+            print(f"{pais['NOMBRE']} - Población: {pais['POBLACION']} - Superficie: {pais['SUPERFICIE']} km² - Continente: {pais['CONTINENTE']}")
+    else:
+        print(f"⚠️ [ADVERTENCIA] No se encontraron países con superficie entre {min_superficie} y {max_superficie}")
+        
+     
+
+def ordenar_paises():
+    paises = obtenerPaises_csv()
+    print(paises)
+
+
 
 
 
@@ -263,7 +470,7 @@ def mostrar_menu():
 
 def main():
     
-    print("¡Bienvenido al Sistema de Gestión de Datos de Países!")
+    print("\n¡Bienvenido al Sistema de Gestión de Datos de Países!")
     
     while True:
         mostrar_menu()
@@ -280,22 +487,18 @@ def main():
             case '3':
                 buscar_pais()
             
+            case '4':
+                filtrar_por_continente()
             
-            # case '4':
-            #     filtrar_por_continente(paises)
-            #     pass
+            case '5':
+                filtrar_por_rango_poblacion()
             
-            # case '5':
-            #     filtrar_por_rango_poblacion(paises)
-            #     pass
-            
-            # case '6':
-            #     filtrar_por_rango_superficie(paises)
-            #     pass
-            
-            # case '7':
-            #     ordenar_paises(paises)
-            #     pass
+            case '6':
+                filtrar_por_rango_superficie()
+                
+            case '7':
+                ordenar_paises()
+                
             
             # case '8':
             #    valor =  mostrar_estadisticas(paises)
