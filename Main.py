@@ -160,10 +160,10 @@ def agregar_pais():
 
     nombre = validar_pais()
 
-    entrada_poblacion = input("Ingrese la cantidad poblacion: ").strip()
+    entrada_poblacion = input("Ingrese la cantidad de poblacion: ").strip()
     poblacion = validar_cantidad("poblacion", entrada_poblacion )
 
-    entrada_superficie = input("Ingrese la cantidad superficie: ").strip()
+    entrada_superficie = input("Ingrese la cantidad de superficie: ").strip()
     superficie = validar_cantidad("superficie", entrada_superficie )
     
     continente = validar_continente()
@@ -238,9 +238,12 @@ def coincidencia_parcial(paises):
 
     # Busca coincidencias con la primera, segunda y tercer letra del pais
     for pais in paises:
-        if pais["NOMBRE"][:3] == buscar_nombre[:3]:
-            if pais not in filtrar_paises:
-                filtrar_paises.append(pais)
+        for i in range (1,4):
+            print(i)
+            if pais["NOMBRE"][:i] ==  buscar_nombre[:i]:
+                if pais not in filtrar_paises:
+                    filtrar_paises.append(pais)
+                break
   
     if not filtrar_paises:
         print("⚠️ No se encontraron países con esas letras.")
