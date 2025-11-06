@@ -1,14 +1,14 @@
-# 💻 Trabajo Práctico Integrador 
+# Trabajo Práctico Integrador 
 
 **Tecnicatura Universitaria en Programación**  
-📍 _Universidad Tecnológica Nacional_
+ _Universidad Tecnológica Nacional_
 
 ### ✨ Materia
 
 **Programación I**
 
-### ✨ Estudiantes
+### ✨ Integrantes GRUPO 6
 
-- **Nombre:** Franco, Analía
-- **Nombre:** Rodriguez, Florencia
+- Franco, Analía - Comisión 5
+- Rodriguez, Florencia - Comisión 11
 
