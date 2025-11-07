@@ -66,27 +66,6 @@ def guardarTodosPaises_csv(paises):
 
 
 
-def existe_pais(nombre):
-    '''
-    Verifica si existe el país con el nombre indicado en el archivo.
-
-    Args:
-        nombre (str): nombre del pais a buscar
-        
-    Returns:
-        bool: True si existe, False si no
-    '''
-    paises = obtenerPaises_csv() # Trae el listado de países
-
-    # Recorre todos los países para buscar coincidencia por nombre
-    for pais in paises:
-        if pais["NOMBRE"].lower() == nombre.strip().lower():
-            return True 
-
-    return False # El país no existe en el listado
-
-
-
 def coincidencia_parcial(paises):
     '''
     Busca países que coincidan con las primeras tres letras del texto ingresado por el usuasio.
@@ -142,6 +121,15 @@ def coincidencia_parcial(paises):
 
 
 def coincidencia_exacta(paises):
+    '''
+    Busca paises en base a la coincidencia exacta.
+    
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+
+    Returns:
+        None (Muestra la información por consola).
+    '''
     print("\n_____Coincidencia Exacta_____")
 
     if len(paises) == 0:
@@ -165,6 +153,141 @@ def coincidencia_exacta(paises):
                 if buscar_nombre.lower() == pais["NOMBRE"].lower():
                     print(f"\n 🌎 País: {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | Superficie: {pais['SUPERFICIE']} km² | Continente: {pais['CONTINENTE'].title()}")
             break
+
+
+
+   
+
+def ordenar_por_nombre(paises):
+    '''
+    Ordena la lista paises por nombre utilizando algoritmo Buble Sort y los muestra por consola.
+    
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+
+    Returns:
+        None (Muestra la información por consola).
+    '''
+    print("\n--- ORDENAR PAISES POR NOMBRE ---")
+
+    # Orden de países según nombre (usando algoritmo Buble Sort)
+    n = len(paises)
+    # Recorre todos los elementos de la lista
+    for i in range(n):
+        # Se optimiza para no compaparar elementos ya ordenados al final
+        # (n-i-1) porque los últimos 'i' elementos ya están en su lugar    
+        for j in range(0, n-i-1):
+            # Compara el nombre actual con el siguiente
+            if paises[j]["NOMBRE"] > paises[j+1]["NOMBRE"]:
+                # Si el nombre actual es lexicamente mayor, los intercambia
+                paises[j], paises[j+1] = paises[j+1],paises[j]
+
+    # Muestra el resultado 
+    for pais in paises:
+        print(f"\n 🌎 {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | Superficie: {pais['SUPERFICIE']} km² | {pais['CONTINENTE'].title()}")
+
+
+
+
+def ordenar_por_poblacion(paises):
+    '''
+    Ordena la lista paises por población (ascendente) utilizando algoritmo Buble Sort y los muestra por consola.
+    
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+
+    Returns:
+        None (Muestra la información por consola).
+    '''
+    print("\n--- ORDENAR PAISES POR POBLACION (ASCENDENTE) ---")
+
+    # Orden de países según población (usando algoritmo Buble Sort)
+    n = len(paises)
+    # Recorre todos los elementos de la lista
+    for i in range(n):   
+        for j in range(0, n-i-1):
+            # Compara el nombre actual con el siguiente
+            if paises[j]["POBLACION"] > paises[j+1]["POBLACION"]:
+                # Si el nombre actual es lexicamente mayor, los intercambia
+                paises[j], paises[j+1] = paises[j+1],paises[j]
+
+    # Muestra el resultado 
+    for pais in paises:
+        print(f"\n 🌎 Población: {pais['POBLACION']} | {pais['NOMBRE'].title()} | Superficie: {pais['SUPERFICIE']} km² | {pais['CONTINENTE'].title()}")
+
+
+
+def ordenar_superficie_ascendente(paises):
+    '''
+    Ordena la lista paises por superficie (orden Ascendente) utilizando algoritmo Buble Sort y los muestra por consola.
+    
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+
+    Returns:
+        None (Muestra la información por consola).
+    '''
+    print("\n--- ORDENAR PAISES POR SUPERFICIE (ORDEN ASCENDENTE) ---")
+
+    n = len(paises)
+
+    # Recorre todos los elementos de la lista
+    for i in range(n):  
+        for j in range(0, n-i-1):
+            if paises[j]["SUPERFICIE"] > paises[j+1]["SUPERFICIE"]:
+                paises[j], paises[j+1] = paises[j+1],paises[j]
+
+    # Muestra el resultado 
+    for pais in paises:
+        print(f"\n 🌎 Superficie: {pais['SUPERFICIE']} km² | {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | {pais['CONTINENTE'].title()}")
+
+
+
+
+def orden_superficie_descendente(paises):
+    '''
+    Ordena la lista paises por superficie (orden Descendente) utilizando algoritmo Buble Sort y los muestra por consola.
+    
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+
+    Returns:
+        None (Muestra la información por consola).
+    '''
+    print("\n--- ORDENAR PAISES POR SUPERFICIE (ORDEN DESCENDENTE) ---")
+
+    n = len(paises)
+
+    # Recorre todos los elementos de la lista
+    for i in range(n):  
+        for j in range(0, n-i-1):
+            if paises[j]["SUPERFICIE"] < paises[j+1]["SUPERFICIE"]:
+                paises[j], paises[j+1] = paises[j+1],paises[j]
+
+    # Muestra el resultado 
+    for pais in paises:
+        print(f"\n 🌎 Superficie: {pais['SUPERFICIE']} km² | {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | {pais['CONTINENTE'].title()}")
+
+
+
+def existe_pais(nombre):
+    '''
+    Verifica si existe el país con el nombre indicado en el archivo.
+
+    Args:
+        nombre (str): nombre del pais a buscar
+        
+    Returns:
+        bool: True si existe, False si no
+    '''
+    paises = obtenerPaises_csv() # Trae el listado de países
+
+    # Recorre todos los países para buscar coincidencia por nombre
+    for pais in paises:
+        if pais["NOMBRE"].lower() == nombre.strip().lower():
+            return True 
+
+    return False # El país no existe en el listado
 
 
 
@@ -292,7 +415,8 @@ def actualizar_pais():
 
 def buscar_pais():
     '''
-    Busca un país por nombre, usando coincidencia parcial o exacta
+    Busca un país por nombre, usando coincidencia parcial o exacta.
+
     '''
     print("\n--- BUSCAR PAÍS ---")
     # Guarda el array de países
@@ -327,7 +451,7 @@ def buscar_pais():
 
 def filtrar_por_continente():
     '''
-    Filtra países por continente
+    Filtra países por continente.
     '''
     print("\n--- FILTRAR POR CONTINENTE ---")
     
@@ -458,29 +582,45 @@ def ordenar_paises():
     if not paises:
         print("⚠️  No hay países cargados.")
         return
-
-    # Orden de países según nombre
-    arr_nombres = []
-
-    for pais in paises:
-        arr_nombres.append(pais["NOMBRE"])
-
-    ordenado = sorted(arr_nombres)
     
-    paises_ordenados = []
+    # Solicita input al usuario
+    entrada = input(
+    "\nSeleccione el tipo de ordenamiento:\n"
+    "  [1] Nombre \n"
+    "  [2] Población \n"
+    "  [3] Superficie (orden ascendente) \n"
+    "  [4] Superficie (orden descendente) \n"
+    "Opción: ")
 
-    for nombre in ordenado:
-        for pais in paises:
-            if nombre == pais["NOMBRE"]:
-                paises_ordenados.append(pais)
-    # Muestra el resultado 
-    for pais in paises_ordenados:
-        print(f"\n 🌎 {pais['NOMBRE'].title()} | Población: {pais['POBLACION']} | Superficie: {pais['SUPERFICIE']} km² | {pais['CONTINENTE'].title()}")
+    while True:
+        match entrada:
+            case '1':
+                # Ordena países por nombre:
+                ordenar_por_nombre(paises)
+                break
 
+            case '2':
+                # Ordena países según población:
+                ordenar_por_poblacion(paises)
+                break
+            
+            case '3':
+                # Ordena países por superficie (Orden Adcendente):
+                ordenar_superficie_ascendente(paises)
+                break
 
+            case '4':
+                # Ordena países por superficie (Orden Descendente):
+                orden_superficie_descendente(paises)
+                break
 
-    
+            case _:
+                entrada = input("\n❌ Ingrese una de las opciones para ordenar: \n [1] Nombre \n [2] Superficie \n [3] Poblacion Ascedente \n [4] Población Descendente \n 'salir' para finalizar \n Opción: ")
 
+                # Permite salir de la opción
+                if entrada == "salir":
+                    break
+              
 
 
 
