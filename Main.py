@@ -156,6 +156,114 @@ def coincidencia_exacta(paises):
 
 
 
+
+def filtrar_por_continente(paises):
+    '''
+    Filtra países por continente.
+    '''
+    print("\n--- FILTRAR POR CONTINENTE ---")
+    
+    paises = obtenerPaises_csv()
+    
+    #Validar si hay países cargados
+    if not paises:
+        print("⚠️  No hay países cargados.")
+        return
+    
+    # Llama a la función validar_continente
+    continente = validar_continente()
+    
+    # Filtra los países
+    filtrar_paises = []
+    for pais in paises:
+        if pais["CONTINENTE"].lower() == continente.lower():
+            filtrar_paises.append(pais)
+    
+    # Muestra los resultados
+    if filtrar_paises:
+        print(f"\n 🌎  Países del continente '{continente.upper()}': ")
+        for pais in filtrar_paises:
+            print(f"* {pais["NOMBRE"].title()} - Población: {pais["POBLACION"]} - Superficie: {pais["SUPERFICIE"]} km²")
+    else:
+        print(f"⚠️  No hay países del continente '{continente}'")
+        
+    
+   
+def filtrar_por_rango_poblacion(paises):
+    '''
+    Filtra países por rango de población
+    '''
+    print("\n--- FILTRAR POR RANGO DE POBLACIÓN ---")
+    
+    print("\nIngrese el rango de la población: ")
+    
+    # Validar el rango de la población mínima
+    valor_min = input("Población mínima: ").strip()
+    min_poblacion = validar_cantidad("Población mínima", valor_min)
+    
+    # Validar el rango de la población máxima
+    valor_max = input("Población máxima: ").strip()
+    max_poblacion = validar_cantidad("Población máxima", valor_max)
+    
+    # Validamos que el rango mínimo no sea mayor que el rango máximo de la población
+    if min_poblacion > max_poblacion:
+        print("❌ La población mínima no puede ser mayor que la población máxima")
+        return
+    
+    #Filtrar los países
+    filtrar_paises = []
+    for pais in paises:
+        if min_poblacion <= pais["POBLACION"] <= max_poblacion:
+            filtrar_paises.append(pais)
+    
+    #Mostrar los resultados
+    if filtrar_paises:
+        print(f"\n✅ Países con población entre {min_poblacion} y {max_poblacion}: ")
+        print(f" 🌎 Se encontraron {len(filtrar_paises)} país(es)\n")
+        for pais in filtrar_paises:
+            print(f"* {pais['NOMBRE'].title()} - Población: {pais['POBLACION']} - Superficie: {pais['SUPERFICIE']} km² - Continente: {pais['CONTINENTE'].title()}")
+    else:
+        print(f"⚠️ No se encontraron países con población entre {min_poblacion} y {max_poblacion}")
+
+
+   
+def filtrar_por_rango_superficie(paises):
+    '''
+    Filtra países por rango de superficie
+    '''
+    print("\n--- FILTRAR POR RANGO DE SUPERFICIE ---")
+
+    print("\nIngrese el rango de la superficie (km²): ")
+    
+     # Valida el rango de la superficie mínima
+    valor_min = input("Superficie mínima: ").strip()
+    min_superficie = validar_cantidad('valor mínimo',valor_min)
+    
+    # Valida el rango de la superficie máxima
+    valor_max = input("Superficie máxima: ").strip()
+    max_superficie = validar_cantidad('valor máximo',valor_max)
+    
+    # Valida que el rango mínimo no sea mayor que el rango máximo de la superficie
+    if min_superficie > max_superficie:
+        print("❌ La superficie mínima no puede ser mayor que la superficie máxima")
+        return
+    
+    # Filtr los países
+    filtrar_paises = []
+    for pais in paises:
+        if min_superficie <= pais["SUPERFICIE"] <= max_superficie:
+            filtrar_paises.append(pais)
+    
+    # Muestra los resultados
+    if filtrar_paises:
+        print(f"\n✅ [OK] Países con superficie entre {min_superficie} y {max_superficie}: ")
+        print(f"🌎 Se encontraron {len(filtrar_paises)} país(es)")
+        for pais in filtrar_paises:
+            print(f" * {pais['NOMBRE'].title()} - Población: {pais['POBLACION']} - Superficie: {pais['SUPERFICIE']} km² - Continente: {pais['CONTINENTE'].title()}")
+    else:
+        print(f"⚠️  No se encontraron países con superficie entre {min_superficie} y {max_superficie}")
+
+
    
 
 def ordenar_por_nombre(paises):
@@ -449,127 +557,51 @@ def buscar_pais():
                 
 
 
-def filtrar_por_continente():
+def filtrar_paises():
     '''
-    Filtra países por continente.
+    Filtra paises por continente, rango d epoblación y rango de superficie o superficie.
     '''
-    print("\n--- FILTRAR POR CONTINENTE ---")
-    
+    print("\n--- FILTRAR PAISES ---")
     paises = obtenerPaises_csv()
-    
-    #Validar si hay países cargados
-    if not paises:
-        print("⚠️  No hay países cargados.")
-        return
-    
-    # Llama a la función validar_continente
-    continente = validar_continente()
-    
-    # Filtra los países
-    filtrar_paises = []
-    for pais in paises:
-        if pais["CONTINENTE"].lower() == continente.lower():
-            filtrar_paises.append(pais)
-    
-    # Muestra los resultados
-    if filtrar_paises:
-        print(f"\n 🌎  Países del continente '{continente.upper()}': ")
-        for pais in filtrar_paises:
-            print(f"* {pais["NOMBRE"].title()} - Población: {pais["POBLACION"]} - Superficie: {pais["SUPERFICIE"]} km²")
-    else:
-        print(f"⚠️  No hay países del continente '{continente}'")
-        
-    
-   
-def filtrar_por_rango_poblacion():
-    '''
-    Filtra países por rango de población
-    '''
-    print("\n--- FILTRAR POR RANGO DE POBLACIÓN ---")
-    
-    paises = obtenerPaises_csv()
-    
-    # Validar si hay países cargados
-    if not paises:
-        print("⚠️  No hay países cargados.")
-        return
-    
-    print("Ingrese el rango de la población: ")
-    
-    # Validar el rango de la población mínima
-    valor_min = input("Población mínima: ").strip()
-    min_poblacion = validar_cantidad("Población mínima", valor_min)
-    
-    # Validar el rango de la población máxima
-    valor_max = input("Población máxima: ").strip()
-    max_poblacion = validar_cantidad("Población máxima", valor_max)
-    
-    # Validamos que el rango mínimo no sea mayor que el rango máximo de la población
-    if min_poblacion > max_poblacion:
-        print("❌ La población mínima no puede ser mayor que la población máxima")
-        return
-    
-    #Filtrar los países
-    filtrar_paises = []
-    for pais in paises:
-        if min_poblacion <= pais["POBLACION"] <= max_poblacion:
-            filtrar_paises.append(pais)
-    
-    #Mostrar los resultados
-    if filtrar_paises:
-        print(f"\n✅ Países con población entre {min_poblacion} y {max_poblacion}: ")
-        print(f" 🌎 Se encontraron {len(filtrar_paises)} país(es)\n")
-        for pais in filtrar_paises:
-            print(f"* {pais['NOMBRE'].title()} - Población: {pais['POBLACION']} - Superficie: {pais['SUPERFICIE']} km² - Continente: {pais['CONTINENTE'].title()}")
-    else:
-        print(f"⚠️ No se encontraron países con población entre {min_poblacion} y {max_poblacion}")
 
-
-   
-def filtrar_por_rango_superficie():
-    '''
-    Filtra países por rango de superficie
-    '''
-    print("\n--- FILTRAR POR RANGO DE SUPERFICIE ---")
-    
-    paises = obtenerPaises_csv()
-    
     # Valida si hay países cargados
     if not paises:
         print("⚠️  No hay países cargados.")
         return
     
-    print("Ingrese el rango de la superficie (km²): ")
-    
-     # Valida el rango de la superficie mínima
-    valor_min = input("Superficie mínima: ").strip()
-    min_superficie = validar_cantidad('valor mínimo',valor_min)
-    
-    # Valida el rango de la superficie máxima
-    valor_max = input("Superficie máxima: ").strip()
-    max_superficie = validar_cantidad('valor máximo',valor_max)
-    
-    # Valida que el rango mínimo no sea mayor que el rango máximo de la superficie
-    if min_superficie > max_superficie:
-        print("❌ La superficie mínima no puede ser mayor que la superficie máxima")
-        return
-    
-    # Filtr los países
-    filtrar_paises = []
-    for pais in paises:
-        if min_superficie <= pais["SUPERFICIE"] <= max_superficie:
-            filtrar_paises.append(pais)
-    
-    # Muestra los resultados
-    if filtrar_paises:
-        print(f"\n✅ [OK] Países con superficie entre {min_superficie} y {max_superficie}: ")
-        print(f"🌎 Se encontraron {len(filtrar_paises)} país(es)")
-        for pais in filtrar_paises:
-            print(f" * {pais['NOMBRE'].title()} - Población: {pais['POBLACION']} - Superficie: {pais['SUPERFICIE']} km² - Continente: {pais['CONTINENTE'].title()}")
-    else:
-        print(f"⚠️  No se encontraron países con superficie entre {min_superficie} y {max_superficie}")
-        
-     
+    # Solicita input al usuario
+    entrada = input(
+    "\nSeleccione el tipo de filtro:\n"
+    "  [1] Continente \n"
+    "  [2] Rango Población \n"
+    "  [3] Rango de Superficie \n"
+    "Opción: ")
+
+    while True:
+        match entrada:
+            case '1':
+                # Ordena países según continente:
+                filtrar_por_continente(paises)
+                break
+
+            case '2':
+                # Ordena países según rango de población:
+                filtrar_por_rango_poblacion(paises)
+                break
+            
+            case '3':
+                # Ordena países según rango de superficie: 
+                filtrar_por_rango_superficie(paises)
+                break
+
+            case _:
+                entrada = input("\n❌ Ingrese una de las opciones para ordenar: \n [1] Continente \n [2] Rango Población \n [3] Rango Superficie \n 'salir' para finalizar \n Opción: ")
+
+                # Permite salir de la opción
+                if entrada == "salir":
+                    break
+              
+
 
 def ordenar_paises():
     '''
@@ -637,12 +669,10 @@ def mostrar_menu():
     print("1. Agregar país")
     print("2. Actualizar país")
     print("3. Buscar país por nombre")
-    print("4. Filtrar países por continente")
-    print("5. Filtrar países por rango de población")
-    print("6. Filtrar países por rango de superficie")
-    print("7. Ordenar países")
-    print("8. Mostrar estadísticas")
-    print("9. Salir")
+    print("4. Filtrar países")
+    print("5. Ordenar países")
+    print("6. Mostrar estadísticas")
+    print("7. Salir")
     print("-"*50)
 
 def main():
@@ -665,27 +695,20 @@ def main():
                 buscar_pais()
             
             case '4':
-                filtrar_por_continente()
+                filtrar_paises()
             
             case '5':
-                filtrar_por_rango_poblacion()
+                ordenar_paises()
             
-            case '6':
-                filtrar_por_rango_superficie()
+            # case '6':
+            #     mostrar_estadisticas()
+                
                 
             case '7':
-                ordenar_paises()
-                
-            
-            # case '8':
-            #    valor =  mostrar_estadisticas(paises)
-            #    pass
-            
-            case '9':
                 print("\n¡Gracias por usar el Sistema de Gestión de Datos de Países! ")
                 print("Saliendo del programa... 👋 \n")
                 break
-            
+
             case _:
                 print("❌ Opción inválida. Por favor, seleccione (1-9).")
 
