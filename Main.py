@@ -559,7 +559,7 @@ def buscar_pais():
 
 def filtrar_paises():
     '''
-    Filtra paises por continente, rango d epoblación y rango de superficie o superficie.
+    Filtra paises por continente, rango de población o rango de superficie.
     '''
     print("\n--- FILTRAR PAISES ---")
     paises = obtenerPaises_csv()
@@ -655,6 +655,105 @@ def ordenar_paises():
               
 
 
+def mostrar_estadisticas():
+    '''
+    Devuelve una serie de estadísticas que van desde mostrar el país con mayor y menor población, 
+    el promedio de población, el promedio de superficie y cantidad de países por continente. 
+    
+    '''
+    print("\n--- MOSTRAR ESTADÍSTICAS ---")
+    paises = obtenerPaises_csv()
+
+    # Valida si hay países cargados
+    if not paises:
+        print("⚠️  No hay países cargados.")
+        return
+    
+    # Solicita input al usuario
+    entrada = input(
+    "\nSeleccione una opción:\n"
+    "  [1] País con Mayor y Menor población \n"
+    "  [2] Promedio de Población \n"
+    "  [3] Promedio de Superficie \n"
+    "  [4] Cantidad de países por continente \n"
+    "Opción: ")
+
+    while True:
+        match entrada:
+            case '1':
+                # Muestra el país con mayor y menor población:
+                pais_mayor_menor_poblacion(paises)
+                break
+
+            case '2':
+                # Muestra el promedio de población:
+                promedio("POBLACION", paises)
+                break
+            
+            case '3':
+                # Muestra el promedio de superficie:
+                promedio("SUPERFICIE", paises)
+                break
+
+            # case '4':
+            #     # Muestra cuantos países hay por continente:
+            #     paises_por_continente(paises)
+            #     break
+
+            case _:
+                entrada = input("\n❌ Ingrese una de las opciones para ordenar: \n [1] País con Mayor y Menor Población \n [2] Promedio de Población \n [3] Promedio de Superficie \n [4] Cantidad de países por continente \n 'salir' para finalizar \n Opción: ")
+
+                # Permite salir de la opción
+                if entrada == "salir":
+                    break
+              
+
+
+def pais_mayor_menor_poblacion(paises):
+    '''
+    Ordena la lista de países según su población de menor a mayor, usando método de burbujeo.
+    Y muestra por pantalla el país con mayor y menor población.
+    
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+    '''
+    n = len(paises)
+
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if paises[j]["POBLACION"] > paises[j+1]["POBLACION"]:
+                paises[j], paises[j+1] = paises[j+1],paises[j]
+    
+
+    print("\n Pais con mayor población: ")
+    print(f"🌎  {paises[n-1]['NOMBRE'].upper()} | Población: {paises[n-1]['POBLACION']} | | {paises[n-1]['SUPERFICIE']} km² | {paises[n-1]['CONTINENTE'].title()}")
+    
+    print("\n Pais con menor población: ")
+    print(f"🌎  {paises[0]['NOMBRE'].upper()} | Población: {paises[0]['POBLACION']} | {paises[0]['SUPERFICIE']} km² | {paises[0]['CONTINENTE'].title()}")
+
+
+
+
+def promedio (categoria, paises):
+    '''
+    Retorna en pantalla el promedio de la categoría seleccionada.
+    '''
+    n = len(paises)
+    contador = 0
+
+    for pais in paises:
+        contador += pais[categoria.upper()]
+
+    print(f"\n📊  El promedio de {categoria.lower()} es: {contador/n}")
+
+
+
+
+# def paises_por_continente(paises):
+#     '''
+#     '''
+#     print("")
+
 
 
 
@@ -700,9 +799,8 @@ def main():
             case '5':
                 ordenar_paises()
             
-            # case '6':
-            #     mostrar_estadisticas()
-                
+            case '6':
+                mostrar_estadisticas()
                 
             case '7':
                 print("\n¡Gracias por usar el Sistema de Gestión de Datos de Países! ")
