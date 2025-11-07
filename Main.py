@@ -212,8 +212,9 @@ def validar_pais():
     while True: 
         nombre = input("Ingrese nombre del país: ").strip().lower()
 
-        if not nombre.isalpha(): 
-            nombre = print("\n ⚠️  Error, ingrese un nombre válido: ")
+        # Validar que todas las palabras sean alfabéticas
+        if not all(palabra.isalpha() for palabra in nombre.split()):
+            print("\n ⚠️ El nombre solo puede contener letras (sin números ni símbolos).")
             continue
 
         if existe_pais(nombre):
