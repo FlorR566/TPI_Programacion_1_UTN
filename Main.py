@@ -685,15 +685,15 @@ def mostrar_estadisticas():
                 pais_mayor_menor_poblacion(paises)
                 break
 
-            # case '2':
-            #     # Muestra el promedio de población:
-            #     promedio_poblacion(paises)
-            #     break
+            case '2':
+                # Muestra el promedio de población:
+                promedio("POBLACION", paises)
+                break
             
-            # case '3':
-            #     # Muestra el promedio de superficie:
-            #     promedio_superficie(paises)
-            #     break
+            case '3':
+                # Muestra el promedio de superficie:
+                promedio("SUPERFICIE", paises)
+                break
 
             # case '4':
             #     # Muestra cuantos países hay por continente:
@@ -717,7 +717,6 @@ def pais_mayor_menor_poblacion(paises):
     Args:
         paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
     '''
-    
     n = len(paises)
 
     for i in range(n):
@@ -731,7 +730,31 @@ def pais_mayor_menor_poblacion(paises):
     
     print("\n Pais con menor población: ")
     print(f"🌎  {paises[0]['NOMBRE'].upper()} | Población: {paises[0]['POBLACION']} | {paises[0]['SUPERFICIE']} km² | {paises[0]['CONTINENTE'].title()}")
-   
+
+
+
+
+def promedio (categoria, paises):
+    '''
+    Retorna en pantalla el promedio de la categoría seleccionada.
+    '''
+    n = len(paises)
+    contador = 0
+
+    for pais in paises:
+        contador += pais[categoria.upper()]
+
+    print(f"\n📊  El promedio de {categoria.lower()} es: {contador/n}")
+
+
+
+
+# def paises_por_continente(paises):
+#     '''
+#     '''
+#     print("")
+
+
 
 
 
