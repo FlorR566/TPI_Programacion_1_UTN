@@ -23,7 +23,7 @@ Programación I
 | 🗃️ Archivo / Directorio | 🧾 Descripción |
 |--------------------------|----------------|
 | **main.py** | Punto de inicio del programa; contiene el menú principal y las llamadas a las distintas funciones del sistema. |
-| **datosDePaises.csv** | Archivo CSV con la información de los países (nombre, continente, población, superficie, etc.). |
+| **datosDePaises.csv** | Archivo CSV con la información de los países (nombre, población, superficie, continente). |
 | **.gitignore** | Define qué archivos no se subirán al repositorio. |
 
 ---
