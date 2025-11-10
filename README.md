@@ -1,8 +1,6 @@
 # **Trabajo Práctico Integrador de Programación I – Gestor de Datos de Países 🌍**
 
----
-
-### 🎯 **Objetivo y Descripción del Proyecto**
+### 🎯 **Objetivo del Proyecto**
 
 Desarrollar una aplicación en Python para **gestionar datos de países** mediante un **menú interactivo principal** y funciones modularizadas en cada opción del menú.
 Aplicando los principales conceptos de la materia: listas, diccionarios, funciones, estructuras condicionales y repetitivas, validaciones y ordenamientos.
@@ -13,7 +11,7 @@ Aplicando los principales conceptos de la materia: listas, diccionarios, funcion
 
 ### **Tecnicatura Universitaria en Programación**
 
-### **Materia: Programación I **
+### **Materia: Programación I**
 
 ### 👥 **Integrantes – Grupo 6**
 
@@ -35,11 +33,11 @@ Aplicando los principales conceptos de la materia: listas, diccionarios, funcion
 
 ---
 
-## 🖥️ **Instrucciones de ejecución **
+## 🖥️ **Instrucciones de ejecución**
 
-Se deben descargar los archivos **main.py**, **funciones.py**, **datosDePaíses.py**.
-Tener instalado **Python 3**, para ejecutarlo se debe escribir **python main.py**.
-Al ejecutar el programa, se muestra en la terminal un **menú interactivo** que persiste hasta que elija la opción **“Salir”**.
+- Se deben descargar los archivos **main.py**, **funciones.py**, **datosDePaíses.py**.
+- Tener instalado **Python 3**, para ejecutarlo se debe escribir **python main.py**.
+- Al ejecutar el programa, se muestra en la terminal un **menú interactivo** que persiste hasta que elija la opción **“Salir”**.
 
 ### 🔢 **Opciones del menú principal:**
 
@@ -51,8 +49,21 @@ Al ejecutar el programa, se muestra en la terminal un **menú interactivo** que 
 6️⃣ Mostrar estadísticas  
 7️⃣ Salir
 
+<p align="center">
+  <img src="imagenes/MenuGeneral.png" alt="Menú General" width="500"/>
+</p>
+
 ---
 
+<p align="center">
+Agregar y actualizar país:
+  <p>
+     <img src="imagenes/Agregar_pais.png" alt="Agregar País" width="45%"/>
+  <img src="imagenes/Actualizar_pais.png" alt="Actualizar País" width="45%"/>
+  </p>
+</p>
+
+---
 ## 🗂️ **Funcionalidades Principales**
 
 ### 🔍 **Filtrado de información**
@@ -61,6 +72,10 @@ Al ejecutar el programa, se muestra en la terminal un **menú interactivo** que 
 - Filtrado por **rango de población o superficie**.
 - Devuelve una **lista con los países que cumplen las condiciones**.
 
+<p align="center">
+  <img src="imagenes/Filtro_continente.png" alt="Filtro por continente" width="500"/>
+</p>
+
 ---
 
 ### ↕️ **Ordenamiento**
@@ -68,6 +83,10 @@ Al ejecutar el programa, se muestra en la terminal un **menú interactivo** que 
 - Utiliza método **'bubble sort'** para ordenar los registros.
 - Permite seleccionar **orden ascendente o descendente** para la superficie.
 - Criterios disponibles: **nombre**, **población** o **superficie**.
+  
+<p align="center">
+  <img src="imagenes/Ordenar_pais_nombre.png" alt="Ordenamiento según nombre país" width="500"/>
+</p>
 
 ---
 
@@ -76,6 +95,15 @@ Al ejecutar el programa, se muestra en la terminal un **menú interactivo** que 
 - Determina el país con **mayor** y **menor población**.
 - Calcula los **promedios de superficie y continentes totales**.
 - Cuenta la **cantidad de países por continente** y devuelve una lista con los valores que cumplen la condición.
+
+
+<p align="center">
+País con mayor y menor población y Cantidad de países por continente:
+  <p>
+    <img src="imagenes/Estadisticas_pais_mayor_menor_poblacion.png" alt="País con mayor y menor población" width="45%"/>
+    <img src="imagenes/MostrarPaisesPorContinente.png" alt="Muestra países por continente" width="45%"/>
+  </p>
+</p>
 
 ---
 
