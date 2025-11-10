@@ -47,35 +47,35 @@ Al ejecutar el programa, se muestra un **menú interactivo** que se repite hasta
 
 ### 🔍 **Filtrado de información**
 - Filtrado por **continente**.  
-- Filtrado por **rango de población o superficie** (mayor, menor o entre valores).  
+- Filtrado por **rango de población o superficie**. 
 - Devuelve una **lista con los países que cumplen las condiciones**.  
 
 ---
 
 ### ↕️ **Ordenamiento**
-- Utiliza método 'bubble sort' para ordenar los registros.  
-- Permite seleccionar **orden ascendente o descendente**.  
+- Utiliza método **'bubble sort'** para ordenar los registros.  
+- Permite seleccionar **orden ascendente o descendente** para la superficie.  
 - Criterios disponibles: **nombre**, **población** o **superficie**.  
 
 ---
 
 ### 📊 **Estadísticas**
 - Determina el país con **mayor** y **menor población**.  
-- Calcula el **promedio de superficie total**.  
-- Cuenta la **cantidad de países por continente**.  
+- Calcula los **promedios de superficie y continentes totales**.  
+- Cuenta la **cantidad de países por continente** y devuelve una lista con los valores que cumplen la condición.  
 
 ---
 
 ### ✅ **Validaciones**
-- Controla que los campos de texto no estén vacíos.  
-- Verifica que los valores numéricos (población, superficie) sean válidos y convertibles a `int` o `float`.  
-- Evita errores por **entradas inválidas** que puedan interrumpir la ejecución.  
+- Controla que los campos de texto no estén vacíos, en caso de ser una validación de país, verifica que todas las palabras sean alfabéticas, y que no existan nombres duplicados.
+- Verifica que los valores para (población, superficie) sean válidos, es decir numéricos, positivos distintos de 0 y los convierte a `int`.
+- Evita errores por **entradas inválidas o duplicadas** que puedan interrumpir la ejecución.  
 
 ---
 
 ### 🗒️ **Normalización de datos**
 - Uso de `.strip()` para eliminar espacios en blanco.  
-- Aplicación de `.title()` o `.upper()` para estandarizar los nombres.  
+- Aplicación de `.title()`, `.lower()` o `.upper()` para estandarizar los nombres.  
 - Conversión de textos numéricos antes de realizar operaciones.  
 
 ---
