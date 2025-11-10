@@ -779,7 +779,7 @@ def main():
     print("\n¡Bienvenido al Sistema de Gestión de Datos de Países!")
     
     while True:
-        mostrar_menu()
+        mostrar_menu()    # Llamamos al menú de opciones 
         opcion = input("Seleccione una opción (1-9): ").strip()
         
         # Match/case para direccionar las opciones
