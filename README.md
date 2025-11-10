@@ -13,8 +13,8 @@ listas, diccionarios, funciones, estructuras condicionales y repetitivas, valida
 Programación I  
 
 ### 👥 **Integrantes – Grupo 6**  
-- 🩷 **Franco, Analía – Comisión 5**  
-- 💜 **Rodriguez, Florencia – Comisión 11**
+-  **Franco, Analía – Comisión 5**  
+-  **Rodriguez, Florencia – Comisión 11**
 
 ---
 
@@ -53,7 +53,7 @@ Al ejecutar el programa, se muestra un **menú interactivo** que se repite hasta
 ---
 
 ### ↕️ **Ordenamiento**
-- Utiliza `sorted()` u otros métodos para ordenar los registros.  
+- Utiliza método 'bubble sort' para ordenar los registros.  
 - Permite seleccionar **orden ascendente o descendente**.  
 - Criterios disponibles: **nombre**, **población** o **superficie**.  
 
