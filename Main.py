@@ -378,6 +378,76 @@ def orden_superficie_descendente(paises):
 
 
 
+
+def pais_mayor_menor_poblacion(paises):
+    '''
+    Ordena la lista de países según su población de menor a mayor, usando método de burbujeo.
+    Y muestra por pantalla el país con mayor y menor población.
+    
+    Args:
+        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
+    '''
+    n = len(paises)
+
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if paises[j]["POBLACION"] > paises[j+1]["POBLACION"]:
+                paises[j], paises[j+1] = paises[j+1],paises[j]
+    
+
+    print("\n Pais con mayor población: ")
+    print(f"🌎  {paises[n-1]['NOMBRE'].upper()} | Población: {paises[n-1]['POBLACION']} | | {paises[n-1]['SUPERFICIE']} km² | {paises[n-1]['CONTINENTE'].title()}")
+    
+    print("\n Pais con menor población: ")
+    print(f"🌎  {paises[0]['NOMBRE'].upper()} | Población: {paises[0]['POBLACION']} | {paises[0]['SUPERFICIE']} km² | {paises[0]['CONTINENTE'].title()}")
+
+
+
+
+def promedio (categoria, paises):
+    '''
+    Retorna en pantalla el promedio de la categoría seleccionada.
+    '''
+    n = len(paises)
+    contador = 0
+
+    for pais in paises:
+        contador += pais[categoria.upper()]
+
+    print(f"\n📊  El promedio de {categoria.lower()} es: {(contador/n):.2f}")
+
+
+
+
+def paises_por_continente(paises):
+    '''
+    Muestra la cantidad de países por continente, según los datos acumulados en el archivo csv.
+    Permite visualizar para cada continente los nombres todos los paises que le pertenecen, sus poblaciones y sus superficies.
+    '''
+    print("\n--- MOSTRAR PAÍSES POR CONTINENTE ---")
+
+    # Crea un diccionario con key continente y el valor la lista de paises
+    continentes = {}
+
+    for pais in paises:
+        continente = pais["CONTINENTE"].title()
+        if continente not in continentes:
+            continentes[continente] = []
+        continentes[continente].append(pais)
+
+    # Muestra el resultado
+    for continente in continentes:
+        lista_paises = continentes[continente]
+        print(f"\n🌍 {continente} ( {len(lista_paises)} {"pais" if len(lista_paises) <= 1 else "paises" } )\n" + "-" * 45)
+        for pais in lista_paises:
+            print(f"• {pais["NOMBRE"].title()} | Población: {pais["POBLACION"]} | Superficie: {pais["SUPERFICIE"]} km²")
+        print("-" * 45)
+
+    print("\n✅ Se muestran los países correctamente.")
+
+
+
+
 def existe_pais(nombre):
     '''
     Verifica si existe el país con el nombre indicado en el archivo.
@@ -695,10 +765,10 @@ def mostrar_estadisticas():
                 promedio("SUPERFICIE", paises)
                 break
 
-            # case '4':
-            #     # Muestra cuantos países hay por continente:
-            #     paises_por_continente(paises)
-            #     break
+            case '4':
+                # Muestra cuantos países hay por continente:
+                paises_por_continente(paises)
+                break
 
             case _:
                 entrada = input("\n❌ Ingrese una de las opciones para ordenar: \n [1] País con Mayor y Menor Población \n [2] Promedio de Población \n [3] Promedio de Superficie \n [4] Cantidad de países por continente \n 'salir' para finalizar \n Opción: ")
@@ -708,51 +778,6 @@ def mostrar_estadisticas():
                     break
               
 
-
-def pais_mayor_menor_poblacion(paises):
-    '''
-    Ordena la lista de países según su población de menor a mayor, usando método de burbujeo.
-    Y muestra por pantalla el país con mayor y menor población.
-    
-    Args:
-        paises (list): lista de diccionarios con datos de paises extraído del archivo csv.
-    '''
-    n = len(paises)
-
-    for i in range(n):
-        for j in range(0, n-i-1):
-            if paises[j]["POBLACION"] > paises[j+1]["POBLACION"]:
-                paises[j], paises[j+1] = paises[j+1],paises[j]
-    
-
-    print("\n Pais con mayor población: ")
-    print(f"🌎  {paises[n-1]['NOMBRE'].upper()} | Población: {paises[n-1]['POBLACION']} | | {paises[n-1]['SUPERFICIE']} km² | {paises[n-1]['CONTINENTE'].title()}")
-    
-    print("\n Pais con menor población: ")
-    print(f"🌎  {paises[0]['NOMBRE'].upper()} | Población: {paises[0]['POBLACION']} | {paises[0]['SUPERFICIE']} km² | {paises[0]['CONTINENTE'].title()}")
-
-
-
-
-def promedio (categoria, paises):
-    '''
-    Retorna en pantalla el promedio de la categoría seleccionada.
-    '''
-    n = len(paises)
-    contador = 0
-
-    for pais in paises:
-        contador += pais[categoria.upper()]
-
-    print(f"\n📊  El promedio de {categoria.lower()} es: {contador/n}")
-
-
-
-
-# def paises_por_continente(paises):
-#     '''
-#     '''
-#     print("")
 
 
 
