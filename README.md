@@ -13,10 +13,14 @@ Aplicando los principales conceptos de la materia: listas, diccionarios, funcion
 
 ### **Materia: Programación I**
 
-### 👥 **Integrantes – Grupo 6**
+### **Integrantes – Grupo 6**
 
 - **Franco, Analía – Comisión 5**
 - **Rodriguez, Florencia – Comisión 11**
+
+---
+
+## **Link al video explicativo** https://www.youtube.com/watch?v=tsoPHgItjow
 
 ---
 
